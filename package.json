@@ -1,0 +1,17 @@
+{
+  "name": "ldaptraffic",
+  "version": "0.1.0",
+  "description": "This project allows to send LDAP client traffic to LDAP Server",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "pkg": "pkg --target=node10-win-x64 -o LDAPTraffic.exe index.js"
+  },
+  "author": "github.com/vamzi",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^7.2.0",
+    "ldapjs": "^2.2.4",
+    "single-line-log": "^1.1.2"
+  }
+}
