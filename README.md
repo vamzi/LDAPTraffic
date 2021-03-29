@@ -15,3 +15,7 @@
   -o, --objectclasses [objectclasse...]  Primary objectclass to perfrom search on
   -a, --attributes [attribute...]        Attributes to perfrom search on
   --help                                 display help for command
+
+# 0.1.0
+## Usage Example
+ `LDAPTraffic.exe -h HOSTNAME -p PORT -b dc=example,dc=com -o inetorgperson -a uid sn -D cn=admin -w password`
