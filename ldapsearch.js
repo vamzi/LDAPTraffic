@@ -10,7 +10,7 @@ program
   .requiredOption('-D, --binddn <value>', '<Required> BindDN to used to bind to server')
   .requiredOption('-w, --password <value>', '<Required> Password to used to bind to server')
   .requiredOption('-o, --objectclasses [objectclass...]', '<Required> Primary objectclass to perfrom search on')
-  .requiredOption('-a, --attributes [attribute...]', '<Required> Attributes to perfrom search on')
+  .option('-a, --attributes [attribute...]', '<Optional> Attributes to perfrom search on')
   .option('-i, --interval <number>', '<Optional> Repeat the operation at given interval (ms)')
   .option('--reuseconn', '<Default> Reuse the same connection for the next request')
   .option('--no-reuseconn', 'Do not Reuse the same connection for the next request');
@@ -57,11 +57,16 @@ const client = ldap.createClient({
                   }else{
                       search_filter = search_filter + '(objectclass='+options.objectclasses[0]+')'
                   }
-                  const search_opts = {
-                      filter: search_filter,
-                      attributes : options.attributes,	
-                      scope: 'sub'
-                  };
+                  var search_opts = {
+                    filter: search_filter,
+                    scope: 'sub'
+                };
+                if(options.attributes){
+                  search_opts = {
+                    ...search_opts,
+                    attributes : options.attributes,	
+                  }
+                }
 
                   
                   const timer = setInterval(()=>{
@@ -119,11 +124,16 @@ const client = ldap.createClient({
                     }else{
                         search_filter = search_filter + '(objectclass='+options.objectclasses[0]+')'
                     }
-                    const search_opts = {
-                        filter: search_filter,
-                        attributes : options.attributes,	
-                        scope: 'sub'
-                    };
+                    var search_opts = {
+                      filter: search_filter,
+                      scope: 'sub'
+                  };
+                  if(options.attributes){
+                    search_opts = {
+                      ...search_opts,
+                      attributes : options.attributes,	
+                    }
+                  }
                     ++searchRequestCount
                     client.search(options.basedn, search_opts, (err, res) => {
                   
@@ -168,17 +178,28 @@ const client = ldap.createClient({
               }else{
                   search_filter = search_filter + '(objectclass='+options.objectclasses[0]+')'
               }
-              const search_opts = {
+              var search_opts = {
                   filter: search_filter,
-                  attributes : options.attributes,	
                   scope: 'sub'
               };
+              if(options.attributes){
+                search_opts = {
+                  ...search_opts,
+                  attributes : options.attributes,	
+                }
+              }
               var entryCount = 0;
               client.search(options.basedn, search_opts, (err, res) => {
 
                   res.on('searchEntry', (entry) => {
                     entryCount++;
-                    console.log(entry.object);
+                   // console.log(entry.object['']);
+                    for (var key in entry.object) {
+                      if(key+"" !== "controls"){
+                       console.log(key+": "+entry.object[key]);
+                      }
+                    }
+                    console.log("\n");
                   });
                   res.on('searchReference', (referral) => {
                     // console.log('referral: ' + referral.uris.join());
