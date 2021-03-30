@@ -1,11 +1,11 @@
 {
-  "name": "ldaptraffic",
-  "version": "0.1.0",
-  "description": "This project allows to send LDAP client traffic to LDAP Server",
+  "name": "ldaputils",
+  "version": "0.1.1",
+  "description": "This project will allow you to perform Bind, Serach operation on directory server",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "pkg": "pkg --target=node10-win-x64 -o LDAPTraffic.exe index.js"
+    "start": "node ldapsearch.js",
+    "pkg": "pkg --target=node10-win-x64 -o LDAPSearch.exe ldapsearch.js"
   },
   "author": "github.com/vamzi",
   "license": "ISC",
