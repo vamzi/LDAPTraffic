@@ -39,9 +39,11 @@ const client = ldap.createClient({
           var bindResponseCount = 0;
             setInterval(()=>{
                 bindRequestCount++;
+                const strtTime = Date.now();
                 client.bind(options.binddn,options.password,async (err,res)=>{
                     if(res){
-                        log("bindRequestCount: ",bindRequestCount,"\nbindResponseCount: ",++bindResponseCount);
+                        const endTime = Date.now();
+                        log("bindRequestCount: ",bindRequestCount,"\nbindResponseCount: ",++bindResponseCount+"\nResponseTime: "+(endTime-strtTime)+"ms");
                     }
                 })
             },options.interval);             
@@ -59,9 +61,11 @@ const client = ldap.createClient({
             
             client.on('connect',async ()=>{
                 bindRequestCount++;
+                const strtTime = Date.now();
                 client.bind(options.binddn,options.password,async (err,res)=>{
                     if(res){
-                        log("bindRequestCount: ",bindRequestCount,"\nbindResponseCount: ",++bindResponseCount);
+                        const endTime = Date.now();
+                        log("bindRequestCount: ",bindRequestCount,"\nbindResponseCount: ",++bindResponseCount+"\nResponseTime: "+(endTime-strtTime)+"ms");
                     }
                     client.unbind((err) => {});
                 })
@@ -69,6 +73,7 @@ const client = ldap.createClient({
           },options.interval);
         }
       }else{
+        const strtTime = Date.now();
         client.bind(options.binddn,options.password,async (err,res)=>{
           if(err){
               console.error("Bind failed ",options.binddn,":",options.password);
@@ -79,6 +84,8 @@ const client = ldap.createClient({
             console.log("Bind success ",options.binddn,":",options.password);
             client.unbind((err) => {});
           }
+          const endTime = Date.now();
+          console.log("\nResponseTime: "+(endTime-strtTime)+"ms")
         })
       }
   });
