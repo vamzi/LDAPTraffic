@@ -22,6 +22,15 @@ Sends search request every one second
 `-v, --vers Output the current version of ldapsearch`<br />
 `--help display help for command display help for command`<br />
 
+# 0.1.3
+
+# LDAP Search modified
+
+- Paging is added along with pagesizelimit
+- Paging is enabled by default (with size 100)
+
+`LDAPSearch.exe -h HOSTNAME -p PORT -b dc=example,dc=com -f (objectClass=*) -s sub -D cn=admin -w password`
+
 # 0.1.2
 
 ## Usage Example LDAPBind.exe
