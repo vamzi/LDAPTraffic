@@ -102,6 +102,7 @@ const client = ldap.createClient({
                   
                   const timer = setInterval(()=>{
                   ++searchRequestCount
+                  const strtTime= Date.now();
                   client.search(options.basedn, search_opts, (err, res) => {
                 
                       res.on('searchEntry', (entry) => {
@@ -115,8 +116,9 @@ const client = ldap.createClient({
                       });
                       res.on('end', (result) => {
                           if(result.status===0){
+                            const endTime= Date.now();
                               searchRequestCount++;
-                              log("searchRequestCount: ",searchRequestCount,"\nsearchResponseCount: ",++searchResponseCount);
+                              log("searchRequestCount: ",searchRequestCount,"\nsearchResponseCount: ",++searchResponseCount," LastResponseTime: ",(endTime-strtTime),"ms");
                           }
                       });
                   });   
@@ -183,6 +185,7 @@ const client = ldap.createClient({
                     }
                   }
                     ++searchRequestCount
+                    const strtTime= Date.now();
                     client.search(options.basedn, search_opts, (err, res) => {
                   
                         res.on('searchEntry', (entry) => {
@@ -197,8 +200,9 @@ const client = ldap.createClient({
                         });
                         res.on('end', (result) => {
                             if(result.status===0){
+                              const endTime= Date.now();
                                 searchRequestCount++;
-                                log("searchRequestCount: ",searchRequestCount,"\nsearchResponseCount: ",++searchResponseCount);
+                                log("searchRequestCount: ",searchRequestCount,"\nsearchResponseCount: ",++searchResponseCount," LastResponseTime: ",(endTime-strtTime),"ms");
                             }
                           client.unbind((err) => {});
                         });
